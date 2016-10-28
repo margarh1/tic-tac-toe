@@ -12,8 +12,9 @@ var playerOne;
 var playerTwo;
 
 function $determiningPlayerPieces() {
-  while (playerOne !== ('x' || 'o')){
-    playerOne = Sting(prompt('Pick x or o:').toLowerCase());
+  while (playerOne !== ('x' || 'o')) {
+    playerOne = String(prompt('Pick x or o:')).trim().toLowerCase();
+
   }
 }
 
