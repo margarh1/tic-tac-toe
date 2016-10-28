@@ -1,13 +1,26 @@
 $(document).ready(function() {
   console.log('Sanity check.');
 
-  var clickedBox = $('.box').on('click', function() {
-    $(this).html();
+  $('.box').on('click', function() {
+    console.log($(this).html());
   });
-  
+
 
 });
 
-function newBoard() {
+var playerOne;
+var playerTwo;
+
+function $determiningPlayerPieces() {
+  while (playerOne !== ('x' || 'o')){
+    playerOne = Sting(prompt('Pick x or o:').toLowerCase());
+  }
+}
+
+function $newBoard() {
   $('.box').empty();
+}
+
+function $drawPiece(playerTurn, box) {
+  $
 }
