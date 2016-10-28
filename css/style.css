@@ -1,3 +1,7 @@
+body {
+  background-color: lightblue;
+}
+
 #board {
   margin-top: 10px;
 }
