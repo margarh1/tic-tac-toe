@@ -6,6 +6,9 @@ $(document).ready(function() {
     console.log($(this).html());
   });
 
+  $('button').on('click', function() {
+    $newBoard();
+  });
 
 });
 
@@ -31,6 +34,7 @@ function $determiningPlayerPieces() {
 }
 
 function $newBoard() {
+  console.log('was called');
   $('.box').empty();
 }
 
@@ -45,4 +49,3 @@ function $trackPlayerTurn() {
   return playerTwo;
 }
 
-$('button').focus(newBoard());
