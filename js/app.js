@@ -2,8 +2,9 @@ $(document).ready(function() {
   console.log('Sanity check.');
 
   $('#board').delegate('.box', 'click', function() {
+    $isNotOccupied(this);
     $(this).html('hi');
-    console.log($(this).html());
+    console.log($('.box').eq(this));
   });
 
   $('button').on('click', function() {
@@ -34,7 +35,6 @@ function $determiningPlayerPieces() {
 }
 
 function $newBoard() {
-  console.log('was called');
   $('.box').empty();
 }
 
@@ -47,5 +47,12 @@ function $trackPlayerTurn() {
     return playerOne;
   }
   return playerTwo;
+}
+
+function $isNotOccupied(box) {
+  if ($(box).html() === 'hi') {
+    return false;
+  }
+  return true;
 }
 
