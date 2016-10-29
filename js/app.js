@@ -2,8 +2,9 @@ $(document).ready(function() {
   console.log('Sanity check.');
 
   $('#board').delegate('.box', 'click', function() {
-    $isNotOccupied(this);
-    $(this).html('hi');
+    if ($isNotOccupied(this)) {
+      $drawPiece($trackPlayerTurn(), this);
+    }
     console.log($('.box').eq(this));
   });
 
@@ -14,8 +15,8 @@ $(document).ready(function() {
 });
 
 var numOfTurns = 0;
-var playerOne;
-var playerTwo;
+var playerOne = 'x';
+var playerTwo = 'o';
 
 function $determiningPlayerPieces() {
   if ((playerOne !== 'x') && (playerOne !== 'o')) {
@@ -39,18 +40,19 @@ function $newBoard() {
 }
 
 function $drawPiece(playerTurn, box) {
-  
+  console.log('$drawPiece is linked ' + $(box).html());
+  $(box).html(playerTurn);
 }
 
 function $trackPlayerTurn() {
-  if (numOfTurns % 2 === 0) {
+  if (numOfTurns++ % 2 === 0) {
     return playerOne;
   }
   return playerTwo;
 }
 
 function $isNotOccupied(box) {
-  if ($(box).html() === 'hi') {
+  if (($(box).html() === 'x') || ($(box).html() === 'o')) {
     return false;
   }
   return true;
