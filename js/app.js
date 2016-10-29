@@ -1,7 +1,7 @@
 $(document).ready(function() {
   console.log('Sanity check.');
 
-  $('.box').on('click', function() {
+  $('#board').delegate('.box', 'click', function() {
     console.log($(this).html());
   });
 
@@ -12,9 +12,19 @@ var playerOne;
 var playerTwo;
 
 function $determiningPlayerPieces() {
-  while (playerOne !== ('x' || 'o')) {
-    playerOne = String(prompt('Pick x or o:')).trim().toLowerCase();
-
+  if ((playerOne !== 'x') && (playerOne !== 'o')) {
+    do {
+      playerOne = prompt('Please enter x or o:');
+      if (playerOne !== null) {
+        playerOne = playerOne.trim().toLowerCase();
+        if (playerOne === 'x') {
+          playerTwo = 'o';
+        } else if (playerOne === 'o') {
+          playerTwo = 'x';
+        }
+      }
+    }
+    while ((playerOne !== null) && (playerOne !== '') && (playerOne !== 'x') && (playerOne !== 'o'));
   }
 }
 
