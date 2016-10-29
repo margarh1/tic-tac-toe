@@ -5,7 +5,7 @@ $(document).ready(function() {
     if ($isNotOccupied(this)) {
       $drawPiece($trackPlayerTurn(), this);
     }
-    console.log($isADraw());
+    console.log($checkForWin());
     console.log(winner);
   });
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
 var numOfTurns = 0;
 var playerOne = 'x';
 var playerTwo = 'o';
-var winner = 'none';
+var winner;
 
 function $determiningPlayerPieces() {
   if ((playerOne !== 'x') && (playerOne !== 'o')) {
@@ -39,10 +39,11 @@ function $determiningPlayerPieces() {
 
 function $newBoard() {
   $('.box').empty();
+  winner = null;
 }
 
 function $drawPiece(playerTurn, box) {
-  $(box).html(playerTurn);
+  $(box).text(playerTurn);
 }
 
 function $trackPlayerTurn() {
@@ -53,7 +54,7 @@ function $trackPlayerTurn() {
 }
 
 function $isNotOccupied(box) {
-  if (($(box).html() === 'x') || ($(box).html() === 'o')) {
+  if (($(box).text() === 'x') || ($(box).text() === 'o')) {
     alert('This space is already occupied. Please choose somewhere else.');
     return false;
   }
@@ -72,7 +73,6 @@ function $3InARow() {
 }
 
 function $checkForWin() {
-  console.log('$checkForWin is linked');
   if (($isADraw() === true)) {
     winner = 'Draw';
   }
