@@ -2,12 +2,14 @@ $(document).ready(function() {
   console.log('Sanity check.');
 
   $('#board').delegate('.box', 'click', function() {
+    $(this).html('hi');
     console.log($(this).html());
   });
 
 
 });
 
+var numOfTurns = 0;
 var playerOne;
 var playerTwo;
 
@@ -33,5 +35,14 @@ function $newBoard() {
 }
 
 function $drawPiece(playerTurn, box) {
-  $
+  
 }
+
+function $trackPlayerTurn() {
+  if (numOfTurns % 2 === 0) {
+    return playerOne;
+  }
+  return playerTwo;
+}
+
+$('button').focus(newBoard());
