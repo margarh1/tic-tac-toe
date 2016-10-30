@@ -3,9 +3,10 @@ $(document).ready(function() {
 
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
+      //$checkForWin();
       $drawPiece($trackPlayerTurn(), this);
     }
-    console.log($checkForWin());
+    //console.log($checkForWin());
     console.log(winner);
   });
 
@@ -40,10 +41,11 @@ function $determiningPlayerPieces() {
 function $newBoard() {
   $('.box').empty();
   winner = null;
+  numOfTurns = 0;
 }
 
 function $drawPiece(playerTurn, box) {
-  $(box).text(playerTurn);
+  $(box).html(playerTurn);
 }
 
 function $trackPlayerTurn() {
@@ -54,7 +56,7 @@ function $trackPlayerTurn() {
 }
 
 function $isNotOccupied(box) {
-  if (($(box).text() === 'x') || ($(box).text() === 'o')) {
+  if (($(box).html() === 'x') || ($(box).html() === 'o')) {
     alert('This space is already occupied. Please choose somewhere else.');
     return false;
   }
@@ -68,11 +70,31 @@ function $isADraw() {
   return false;
 }
 
-function $3InARow() {
-  console.log('$3InARow is linked');
+function $checkRow() {
+  console.log('$checkRow');
+  if (($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === 'xxx') || ($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === 'ooo')) {
+    console.log($('#board .row:nth-child(1)').html());
+  } else if (($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === 'xxx') || ($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === 'ooo')) {
+    console.log($('#board .row:nth-child(2)').html());
+  } else if (($('#board .row:nth-child(3)').text().trim().replace(/\s/g, '') === 'xxx') || ($('#board .row:nth-child(3)').text().trim().replace(/\s/g, '') === 'ooo')) {
+    console.log($('#board .row:nth-child(3)').html());
+  }
+}
+
+function $checkColumn() {
+  console.log('$checkColumn is linked');
+
+}
+
+function $checkDiagonal() {
+  console.log('$checkDiagonal is linked');
+
 }
 
 function $checkForWin() {
+  $checkRow();
+  $checkColumn();
+  $checkDiagonal();
   if (($isADraw() === true)) {
     winner = 'Draw';
   }
