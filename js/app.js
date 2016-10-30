@@ -3,8 +3,8 @@ $(document).ready(function() {
 
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
-      $checkForWin();
       $drawPiece($trackPlayerTurn(), this);
+      $checkForWin();
     }
     console.log(winner);
   });
@@ -94,14 +94,18 @@ function $checkColumn(winStr) {
 
 function $checkDiagonal(winStr) {
   console.log('$checkDiagonal is linked');
-
+  if (($('.box').eq(0).text() + $('.box').eq(4).text() + $('.box').eq(8).text()) === winStr) {
+    console.log(winStr);
+  } else if (($('.box').eq(2).text() + $('.box').eq(4).text() + $('.box').eq(6).text()) === winStr) {
+    console.log(winStr);
+  }
 }
 
 function $checkForWin() {
-  var threePlayerPieces = ($trackPlayerTurn() + $trackPlayerTurn() + $trackPlayerTurn());
+  var threePlayerPieces = 'xxx';
   $checkRow(threePlayerPieces);
   $checkColumn(threePlayerPieces);
-  //$checkDiagonal(threePlayerPieces);
+  $checkDiagonal(threePlayerPieces);
   if (($isADraw() === true)) {
     winner = 'Draw';
   }
