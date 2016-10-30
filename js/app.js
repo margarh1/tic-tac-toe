@@ -3,10 +3,9 @@ $(document).ready(function() {
 
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
-      //$checkForWin();
+      $checkForWin();
       $drawPiece($trackPlayerTurn(), this);
     }
-    //console.log($checkForWin());
     console.log(winner);
   });
 
@@ -46,6 +45,7 @@ function $newBoard() {
 
 function $drawPiece(playerTurn, box) {
   $(box).html(playerTurn);
+  //numOfTurns++;
 }
 
 function $trackPlayerTurn() {
@@ -70,31 +70,38 @@ function $isADraw() {
   return false;
 }
 
-function $checkRow() {
+function $checkRow(winStr) {
   console.log('$checkRow');
-  if (($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === 'xxx') || ($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === 'ooo')) {
-    console.log($('#board .row:nth-child(1)').html());
-  } else if (($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === 'xxx') || ($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === 'ooo')) {
-    console.log($('#board .row:nth-child(2)').html());
-  } else if (($('#board .row:nth-child(3)').text().trim().replace(/\s/g, '') === 'xxx') || ($('#board .row:nth-child(3)').text().trim().replace(/\s/g, '') === 'ooo')) {
-    console.log($('#board .row:nth-child(3)').html());
+  if ($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === winStr) {
+    console.log(winStr);
+  } else if ($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === winStr) {
+    console.log(winStr);
+  } else if ($('#board .row:nth-child(3)').text().trim().replace(/\s/g, '') === winStr) {
+    console.log(winStr);
   }
 }
 
-function $checkColumn() {
+function $checkColumn(winStr) {
   console.log('$checkColumn is linked');
-
+  if ($('.row .box:nth-of-type(1)').text() === winStr) {
+    console.log(winStr);
+  } else if ($('.row .box:nth-of-type(2)').text() === winStr) {
+    console.log(winStr);
+  } else if ($('.row .box:nth-of-type(3)').text() === winStr) {
+    console.log(winStr);
+  }
 }
 
-function $checkDiagonal() {
+function $checkDiagonal(winStr) {
   console.log('$checkDiagonal is linked');
 
 }
 
 function $checkForWin() {
-  $checkRow();
-  $checkColumn();
-  $checkDiagonal();
+  var threePlayerPieces = ($trackPlayerTurn() + $trackPlayerTurn() + $trackPlayerTurn());
+  $checkRow(threePlayerPieces);
+  $checkColumn(threePlayerPieces);
+  //$checkDiagonal(threePlayerPieces);
   if (($isADraw() === true)) {
     winner = 'Draw';
   }
