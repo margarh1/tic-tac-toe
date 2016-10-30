@@ -3,7 +3,9 @@ $(document).ready(function() {
 
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
+      console.log(numOfTurns);
       $drawPiece($trackPlayerTurn(), this);
+      console.log(numOfTurns);
       $checkForWin();
     }
     console.log(winner);
@@ -45,11 +47,10 @@ function $newBoard() {
 
 function $drawPiece(playerTurn, box) {
   $(box).html(playerTurn);
-  //numOfTurns++;
 }
 
 function $trackPlayerTurn() {
-  if (numOfTurns++ % 2 === 0) {
+  if (numOfTurns % 2 === 0) {
     return playerOne;
   }
   return playerTwo;
@@ -71,7 +72,6 @@ function $isADraw() {
 }
 
 function $checkRow(winStr) {
-  console.log('$checkRow');
   if ($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === winStr) {
     console.log(winStr);
   } else if ($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === winStr) {
@@ -82,7 +82,6 @@ function $checkRow(winStr) {
 }
 
 function $checkColumn(winStr) {
-  console.log('$checkColumn is linked');
   if ($('.row .box:nth-of-type(1)').text() === winStr) {
     console.log(winStr);
   } else if ($('.row .box:nth-of-type(2)').text() === winStr) {
@@ -93,7 +92,6 @@ function $checkColumn(winStr) {
 }
 
 function $checkDiagonal(winStr) {
-  console.log('$checkDiagonal is linked');
   if (($('.box').eq(0).text() + $('.box').eq(4).text() + $('.box').eq(8).text()) === winStr) {
     console.log(winStr);
   } else if (($('.box').eq(2).text() + $('.box').eq(4).text() + $('.box').eq(6).text()) === winStr) {
@@ -102,12 +100,13 @@ function $checkDiagonal(winStr) {
 }
 
 function $checkForWin() {
-  var threePlayerPieces = 'xxx';
+  var threePlayerPieces = ($trackPlayerTurn() + $trackPlayerTurn() + $trackPlayerTurn());
   $checkRow(threePlayerPieces);
   $checkColumn(threePlayerPieces);
   $checkDiagonal(threePlayerPieces);
   if (($isADraw() === true)) {
     winner = 'Draw';
   }
+  numOfTurns++;
 }
 
