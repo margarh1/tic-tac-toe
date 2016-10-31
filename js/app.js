@@ -1,15 +1,15 @@
 $(document).ready(function() {
   console.log('Sanity check.');
 
-  //$determiningPlayerPieces();
-  //$displayTurnMessage();
+  $determiningPlayerPieces();
+  $displayTurnMessage();
 
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
       $drawPiece($trackPlayerTurn(), this);
       $checkForWin();
       numOfTurns++;
-      //$displayTurnMessage();
+      $displayTurnMessage();
     }
   });
 
@@ -46,7 +46,7 @@ function $determiningPlayerPieces() {
 function $determiningPlayerPieceColor(player) {
   var cnt = 0;
   do {
-    player.color = prompt("Please select one of the following colors:\n\nRed\n\nOrange\n\nYellow\n\nGreen\n\nBlue\n\nPurple");
+    player.color = prompt("Please select one of the following colors for " + player.piece + ":\n\nRed\n\nOrange\n\nYellow\n\nGreen\n\nBlue\n\nPurple");
     if (player.color !== null) {
       player.color = player.color.trim().toLowerCase();
       console.log(player.color);
@@ -65,8 +65,6 @@ function $determiningPlayerPieceColor(player) {
           break;
         case '':
           break;
-        case null:
-          break;
         default:
           $determiningPlayerPieceColor(player);
       }
@@ -83,8 +81,16 @@ function $newBoard() {
 }
 
 function $drawPiece(playerTurn, box) {
-  $(box).html(playerTurn);
-  $(box).css('color', playerTurn.color);
+  switch (playerTurn) {
+    case playerOne.piece:
+      $(box).css('color', playerOne.color);
+      break;
+    case playerTwo.piece:
+      $(box).css('color', playerTwo.color);
+      break;
+  }
+  console.log($(box).attr('style'));
+  $(box).text(playerTurn);
 }
 
 function $trackPlayerTurn() {
@@ -95,7 +101,7 @@ function $trackPlayerTurn() {
 }
 
 function $isNotOccupied(box) {
-  if (($(box).html() === 'x') || ($(box).html() === 'o')) {
+  if (($(box).text() === 'x') || ($(box).text() === 'o')) {
     alert('This space is already occupied. Please choose somewhere else.');
     return false;
   }
