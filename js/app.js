@@ -13,15 +13,19 @@ $(document).ready(function() {
     }
   });
 
-  $('button').on('click', function() {
+  $('.reset').on('click', function() {
     $newBoard();
   });
+
+  $('.scoreboard').on('click', function() {
+    $scoreboard();
+  })
 
 });
 
 var numOfTurns = 0;
-var playerOne = {};
-var playerTwo = {};
+var playerOne = {wins: 0};
+var playerTwo = {wins: 0};
 var winner;
 
 function $determiningPlayerPieces() {
@@ -148,7 +152,7 @@ function $checkForWin() {
   $checkRow(threePlayerPieces);
   $checkColumn(threePlayerPieces);
   $checkDiagonal(threePlayerPieces);
-  if (($isADraw() === true)) {
+  if (($isADraw() === true) && (winner !== playerOne.piece) && (winner !== playerTwo.piece)) {
     winner = 'Draw';
   }
 }
@@ -170,14 +174,23 @@ function $displayWinMessage() {
   switch (winner) {
     case playerOne.piece:
       alert('The winner is:\n\nPlayer One (' + playerOne.piece + ')');
+      playerOne.wins++;
+      $newBoard();
       return false;
     case playerTwo.piece:
       alert('The winner is:\n\nPlayer Two (' + playerTwo.piece + ')');
+      playerTwo.wins++;
+      $newBoard();
       return false;
     case 'Draw':
       alert('This game ended in a draw.');
+      $newBoard();
       return false;
   }
   return true;
+}
+
+function $scoreboard() {
+  alert('Player One (' + playerOne.piece + '): ' + playerOne.wins + '\n\nPlayer Two (' + playerTwo.piece + '): ' + playerTwo.wins);
 }
 
