@@ -26,7 +26,11 @@ $(document).ready(function() {
   })
 
   $('.pieceSwap').on('click', function() {
-    $pieceSwap();
+    if ($('.box:empty').length === 9) {
+      $pieceSwap();
+    } else if ($('.box:empty').length !== 9) {
+      alert('You can only click this button at the beginning of a new game.');
+    }
   })
 
 });
