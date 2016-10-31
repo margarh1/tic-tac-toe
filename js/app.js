@@ -1,14 +1,15 @@
 $(document).ready(function() {
   console.log('Sanity check.');
 
+  $displayTurnMessage();
+
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
-      console.log(numOfTurns);
       $drawPiece($trackPlayerTurn(), this);
-      console.log(numOfTurns);
       $checkForWin();
+      numOfTurns++;
+      $displayTurnMessage();
     }
-    console.log(winner);
   });
 
   $('button').on('click', function() {
@@ -73,29 +74,29 @@ function $isADraw() {
 
 function $checkRow(winStr) {
   if ($('#board .row:nth-child(1)').text().trim().replace(/\s/g, '') === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   } else if ($('#board .row:nth-child(2)').text().trim().replace(/\s/g, '') === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   } else if ($('#board .row:nth-child(3)').text().trim().replace(/\s/g, '') === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   }
 }
 
 function $checkColumn(winStr) {
   if ($('.row .box:nth-of-type(1)').text() === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   } else if ($('.row .box:nth-of-type(2)').text() === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   } else if ($('.row .box:nth-of-type(3)').text() === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   }
 }
 
 function $checkDiagonal(winStr) {
   if (($('.box').eq(0).text() + $('.box').eq(4).text() + $('.box').eq(8).text()) === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   } else if (($('.box').eq(2).text() + $('.box').eq(4).text() + $('.box').eq(6).text()) === winStr) {
-    console.log(winStr);
+    winner = $trackPlayerTurn();
   }
 }
 
@@ -107,6 +108,33 @@ function $checkForWin() {
   if (($isADraw() === true)) {
     winner = 'Draw';
   }
-  numOfTurns++;
+}
+
+function $displayTurnMessage() {
+  if ($displayWinMessage()) {
+    switch ($trackPlayerTurn()) {
+      case playerOne:
+        alert("It is now Player One's turn.");
+        break;
+      case playerTwo:
+        alert("It is now Player Two's turn.");
+        break;
+    }
+  }
+}
+
+function $displayWinMessage() {
+  switch (winner) {
+    case playerOne:
+      alert('The winner is: ' + playerOne);
+      return false;
+    case playerTwo:
+      alert('The winner is: ' + playerTwo);
+      return false;
+    case 'Draw':
+      alert('This game ended in a draw.');
+      return false;
+  }
+  return true;
 }
 
