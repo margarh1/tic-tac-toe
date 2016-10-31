@@ -1,14 +1,15 @@
 $(document).ready(function() {
   console.log('Sanity check.');
 
-  $displayTurnMessage();
+  //$determiningPlayerPieces();
+  //$displayTurnMessage();
 
   $('#board').delegate('.box', 'click', function() {
     if ($isNotOccupied(this)) {
       $drawPiece($trackPlayerTurn(), this);
       $checkForWin();
       numOfTurns++;
-      $displayTurnMessage();
+      //$displayTurnMessage();
     }
   });
 
@@ -19,25 +20,60 @@ $(document).ready(function() {
 });
 
 var numOfTurns = 0;
-var playerOne = 'x';
-var playerTwo = 'o';
+var playerOne = {};
+var playerTwo = {};
 var winner;
 
 function $determiningPlayerPieces() {
-  if ((playerOne !== 'x') && (playerOne !== 'o')) {
+  if ((playerOne.piece !== 'x') && (playerOne.piece !== 'o')) {
     do {
-      playerOne = prompt('Please enter x or o:');
-      if (playerOne !== null) {
-        playerOne = playerOne.trim().toLowerCase();
-        if (playerOne === 'x') {
-          playerTwo = 'o';
-        } else if (playerOne === 'o') {
-          playerTwo = 'x';
+      playerOne.piece = prompt("Please enter x or o for Player One's piece:");
+      if (playerOne.piece !== null) {
+        playerOne.piece = playerOne.piece.trim().toLowerCase();
+        if (playerOne.piece === 'x') {
+          playerTwo.piece = 'o';
+        } else if (playerOne.piece === 'o') {
+          playerTwo.piece = 'x';
         }
       }
     }
-    while ((playerOne !== null) && (playerOne !== '') && (playerOne !== 'x') && (playerOne !== 'o'));
+    while ((playerOne.piece !== null) && (playerOne.piece !== '') && (playerOne.piece !== 'x') && (playerOne.piece !== 'o'));
   }
+  $determiningPlayerPieceColor(playerOne);
+  $determiningPlayerPieceColor(playerTwo);
+}
+
+function $determiningPlayerPieceColor(player) {
+  var cnt = 0;
+  do {
+    player.color = prompt("Please select one of the following colors:\n\nRed\n\nOrange\n\nYellow\n\nGreen\n\nBlue\n\nPurple");
+    if (player.color !== null) {
+      player.color = player.color.trim().toLowerCase();
+      console.log(player.color);
+      switch (player.color) {
+        case 'red':
+          break;
+        case 'orange':
+          break;
+        case 'yellow':
+          break;
+        case 'green':
+          break;
+        case 'blue':
+          break;
+        case 'purple':
+          break;
+        case '':
+          break;
+        case null:
+          break;
+        default:
+          $determiningPlayerPieceColor(player);
+      }
+    }
+    cnt++;
+  }
+  while ((player.color !== null) && (player.color !== '') && (player.color !== 'red') && (player.color !== 'orange') && (player.color !== 'yellow') && (player.color !== 'green') && (player.color !== 'blue') && (player.color !== 'purple') && (cnt < 10));
 }
 
 function $newBoard() {
@@ -48,13 +84,14 @@ function $newBoard() {
 
 function $drawPiece(playerTurn, box) {
   $(box).html(playerTurn);
+  $(box).css('color', playerTurn.color);
 }
 
 function $trackPlayerTurn() {
   if (numOfTurns % 2 === 0) {
-    return playerOne;
+    return playerOne.piece;
   }
-  return playerTwo;
+  return playerTwo.piece;
 }
 
 function $isNotOccupied(box) {
@@ -113,10 +150,10 @@ function $checkForWin() {
 function $displayTurnMessage() {
   if ($displayWinMessage()) {
     switch ($trackPlayerTurn()) {
-      case playerOne:
+      case playerOne.piece:
         alert("It is now Player One's turn.");
         break;
-      case playerTwo:
+      case playerTwo.piece:
         alert("It is now Player Two's turn.");
         break;
     }
@@ -125,11 +162,11 @@ function $displayTurnMessage() {
 
 function $displayWinMessage() {
   switch (winner) {
-    case playerOne:
-      alert('The winner is: ' + playerOne);
+    case playerOne.piece:
+      alert('The winner is:\n\nPlayer One (' + playerOne.piece + ')');
       return false;
-    case playerTwo:
-      alert('The winner is: ' + playerTwo);
+    case playerTwo.piece:
+      alert('The winner is:\n\nPlayer Two (' + playerTwo.piece + ')');
       return false;
     case 'Draw':
       alert('This game ended in a draw.');
