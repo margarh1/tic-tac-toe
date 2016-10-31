@@ -21,6 +21,14 @@ $(document).ready(function() {
     $scoreboard();
   })
 
+  $('.colorChange').on('click', function() {
+    $colorSwap();
+  })
+
+  $('.pieceSwap').on('click', function() {
+    $pieceSwap();
+  })
+
 });
 
 var numOfTurns = 0;
@@ -192,5 +200,19 @@ function $displayWinMessage() {
 
 function $scoreboard() {
   alert('Player One (' + playerOne.piece + '): ' + playerOne.wins + '\n\nPlayer Two (' + playerTwo.piece + '): ' + playerTwo.wins);
+}
+
+function $colorSwap() {
+  $determiningPlayerPieces();
+}
+
+function $pieceSwap() {
+  if (playerOne.piece === 'x') {
+    playerOne.piece = 'o';
+    playerTwo.piece = 'x';
+  } else {
+    playerOne.piece = 'x';
+    playerTwo.piece = 'o';
+  }
 }
 
